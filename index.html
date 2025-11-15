@@ -22,7 +22,6 @@
             position: relative;
         }
 
-        /* Enhanced Animated Background */
         #landingPage::before {
             content: '';
             position: absolute;
@@ -43,7 +42,6 @@
             66% { transform: translate(-50px, 50px) scale(0.9); }
         }
 
-        /* Floating particles overlay */
         #landingPage::after {
             content: '';
             position: absolute;
@@ -477,7 +475,6 @@
             transform: scale(0.98);
         }
 
-        /* Report Card Styles */
         .report-summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -795,7 +792,6 @@
     </div>
 
     <script>
-        // Audio setup
         const sounds = {
             correct: new Audio('correct.mp3'),
             wrong: new Audio('wrong.mp3'),
@@ -805,7 +801,6 @@
         sounds.background.loop = true;
         sounds.background.volume = 0.3;
 
-        // Questions array
         const questions = [
             {
                 question: "What is the capital of France?",
@@ -834,7 +829,7 @@
             }
         ];
 
-        // Canvas and game setup
+        const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         
         let gameState = {
@@ -874,10 +869,10 @@
         
         resizeCanvas();
 
-        document.getElementById('playButton').addEventListener('click', () => {
+        document.getElementById('playButton').addEventListener('click', function() {
             document.getElementById('landingPage').classList.add('hidden');
-            setTimeout(() => {
-                sounds.background.play().catch(e => {});
+            setTimeout(function() {
+                sounds.background.play().catch(function(e) {});
                 initGame();
             }, 800);
         });
@@ -892,7 +887,7 @@
                 cameraY: 0,
                 hasAnswered: false
             };
-            answerHistory = []; // Reset answer history for new game
+            answerHistory = [];
             player.lane = 1;
             player.targetLane = 1;
             player.y = Math.min(400, canvas.height - 150);
@@ -917,7 +912,7 @@
             const q = questions[gameState.currentQuestion];
             const questionEl = document.getElementById('question');
             questionEl.style.animation = 'none';
-            setTimeout(() => {
+            setTimeout(function() {
                 questionEl.textContent = q.question;
                 questionEl.style.animation = 'fadeIn 0.5s ease';
             }, 10);
@@ -961,11 +956,11 @@
             const timerEl = document.getElementById('timer');
             timerEl.classList.remove('warning');
             
-            timer = setInterval(() => {
+            timer = setInterval(function() {
                 if (!gameState.gameRunning) return;
                 
                 gameState.timerValue--;
-                timerEl.textContent = `Time: ${gameState.timerValue}s`;
+                timerEl.textContent = 'Time: ' + gameState.timerValue + 's';
                 
                 if (gameState.timerValue <= 5) {
                     timerEl.classList.add('warning');
@@ -974,7 +969,6 @@
                 if (gameState.timerValue <= 0 && !gameState.hasAnswered) {
                     gameState.hasAnswered = true;
                     
-                    // Record skipped question
                     const q = questions[gameState.currentQuestion];
                     answerHistory.push({
                         question: q.question,
@@ -986,8 +980,8 @@
                     });
                     
                     createSadConfetti();
-                    sounds.wrong.play().catch(e => {});
-                    setTimeout(() => {
+                    sounds.wrong.play().catch(function(e) {});
+                    setTimeout(function() {
                         nextQuestion();
                     }, 1000);
                 }
@@ -997,7 +991,8 @@
         function checkAnswer() {
             if (gameState.hasAnswered) return;
 
-            for (let block of answerBlocks) {
+            for (let i = 0; i < answerBlocks.length; i++) {
+                const block = answerBlocks[i];
                 const playerWorldY = player.y + gameState.cameraY;
                 
                 if (Math.abs(playerWorldY - block.y) < 80 && 
@@ -1009,7 +1004,6 @@
 
                     const q = questions[gameState.currentQuestion];
                     
-                    // Record answer in history
                     answerHistory.push({
                         question: q.question,
                         options: q.options,
@@ -1024,16 +1018,16 @@
                         gameState.speed += 0.3;
                         updateScore(true);
                         createConfetti();
-                        sounds.correct.play().catch(e => {});
+                        sounds.correct.play().catch(function(e) {});
                         
-                        setTimeout(() => {
+                        setTimeout(function() {
                             nextQuestion();
                         }, 4000);
                     } else {
                         createSadConfetti();
-                        sounds.wrong.play().catch(e => {});
+                        sounds.wrong.play().catch(function(e) {});
                         
-                        setTimeout(() => {
+                        setTimeout(function() {
                             nextQuestion();
                         }, 3000);
                     }
@@ -1067,20 +1061,48 @@
                 feedbackContainer.appendChild(confetti);
             }
 
-            setTimeout(() => {
+            setTimeout(function() {
+                feedbackContainer.style.display = 'none';
+                feedbackContainer.innerHTML = '';
+            }, 4000);
+        }
+
+        function createSadConfetti() {
+            const sadEmojis = ['😢', '😭', '😞', '😔', '💔', '😿', '💨'];
+            const feedbackContainer = document.getElementById('feedback');
+            feedbackContainer.style.display = 'block';
+            feedbackContainer.innerHTML = '';
+
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-50px';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                feedbackContainer.appendChild(confetti);
+            }
+
+            setTimeout(function() {
                 feedbackContainer.style.display = 'none';
                 feedbackContainer.innerHTML = '';
             }, 3000);
         }
 
-        function updateScore(animate = false) {
+        function updateScore(animate) {
             const scoreEl = document.getElementById('score');
-            scoreEl.textContent = `Score: ${gameState.score}`;
+            scoreEl.textContent = 'Score: ' + gameState.score;
             
             if (animate) {
                 scoreEl.classList.remove('pulse');
-                setTimeout(() => scoreEl.classList.add('pulse'), 10);
-                setTimeout(() => scoreEl.classList.remove('pulse'), 500);
+                setTimeout(function() {
+                    scoreEl.classList.add('pulse');
+                }, 10);
+                setTimeout(function() {
+                    scoreEl.classList.remove('pulse');
+                }, 500);
             }
         }
 
@@ -1094,76 +1116,55 @@
             clearInterval(timer);
             sounds.background.pause();
             
-            // Calculate statistics
             const totalQuestions = answerHistory.length;
-            const correctAnswers = answerHistory.filter(a => a.isCorrect).length;
-            const incorrectAnswers = answerHistory.filter(a => !a.isCorrect && !a.isSkipped).length;
-            const skippedQuestions = answerHistory.filter(a => a.isSkipped).length;
+            const correctAnswers = answerHistory.filter(function(a) { return a.isCorrect; }).length;
+            const incorrectAnswers = answerHistory.filter(function(a) { return !a.isCorrect && !a.isSkipped; }).length;
+            const skippedQuestions = answerHistory.filter(function(a) { return a.isSkipped; }).length;
             const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
             
-            // Display final score
-            document.getElementById('finalScore').innerHTML = `
-                <div style="font-size: clamp(32px, 7vw, 48px); color: #667eea; font-weight: bold; margin-bottom: 10px;">
-                    ${percentage}%
-                </div>
-                <div style="font-size: clamp(16px, 4vw, 20px); color: #555;">
-                    ${gameState.score} / ${questions.length * 10} Points
-                </div>
-            `;
+            document.getElementById('finalScore').innerHTML = 
+                '<div style="font-size: clamp(32px, 7vw, 48px); color: #667eea; font-weight: bold; margin-bottom: 10px;">' +
+                percentage + '%</div>' +
+                '<div style="font-size: clamp(16px, 4vw, 20px); color: #555;">' +
+                gameState.score + ' / ' + (questions.length * 10) + ' Points</div>';
             
-            // Display summary cards
-            const summaryHTML = `
-                <div class="stat-card correct">
-                    <div class="stat-value">✓ ${correctAnswers}</div>
-                    <div class="stat-label">Correct</div>
-                </div>
-                <div class="stat-card incorrect">
-                    <div class="stat-value">✗ ${incorrectAnswers}</div>
-                    <div class="stat-label">Incorrect</div>
-                </div>
-                <div class="stat-card skipped">
-                    <div class="stat-value">⊘ ${skippedQuestions}</div>
-                    <div class="stat-label">Skipped</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${totalQuestions}</div>
-                    <div class="stat-label">Total</div>
-                </div>
-            `;
+            const summaryHTML = 
+                '<div class="stat-card correct"><div class="stat-value">✓ ' + correctAnswers + '</div><div class="stat-label">Correct</div></div>' +
+                '<div class="stat-card incorrect"><div class="stat-value">✗ ' + incorrectAnswers + '</div><div class="stat-label">Incorrect</div></div>' +
+                '<div class="stat-card skipped"><div class="stat-value">⊘ ' + skippedQuestions + '</div><div class="stat-label">Skipped</div></div>' +
+                '<div class="stat-card"><div class="stat-value">' + totalQuestions + '</div><div class="stat-label">Total</div></div>';
             document.getElementById('reportSummary').innerHTML = summaryHTML;
             
-            // Display detailed review
             let detailsHTML = '<div class="report-title">📋 Question Review</div>';
-            answerHistory.forEach((item, index) => {
+            for (let i = 0; i < answerHistory.length; i++) {
+                const item = answerHistory[i];
                 const statusClass = item.isSkipped ? 'skipped' : (item.isCorrect ? 'correct' : 'incorrect');
                 const statusText = item.isSkipped ? 'Skipped' : (item.isCorrect ? 'Correct' : 'Incorrect');
                 const statusIcon = item.isSkipped ? '⊘' : (item.isCorrect ? '✓' : '✗');
                 
-                detailsHTML += `
-                    <div class="question-review ${statusClass}">
-                        <div class="question-number">Question ${index + 1}</div>
-                        <div class="question-text">${item.question}</div>
-                        <div class="answer-row">
-                            <span class="answer-label">Your Answer:</span>
-                            <span class="answer-value ${item.isSkipped ? 'skipped-ans' : (item.isCorrect ? 'correct-ans' : 'wrong-ans')}">
-                                ${item.userAnswer || 'Not Answered'}
-                            </span>
-                        </div>
-                        ${!item.isCorrect ? `
-                        <div class="answer-row">
-                            <span class="answer-label">Correct Answer:</span>
-                            <span class="answer-value correct-ans">${item.correctAnswer}</span>
-                        </div>
-                        ` : ''}
-                        <span class="status-badge ${statusClass}">${statusIcon} ${statusText}</span>
-                    </div>
-                `;
-            });
+                detailsHTML += '<div class="question-review ' + statusClass + '">' +
+                    '<div class="question-number">Question ' + (i + 1) + '</div>' +
+                    '<div class="question-text">' + item.question + '</div>' +
+                    '<div class="answer-row">' +
+                    '<span class="answer-label">Your Answer:</span>' +
+                    '<span class="answer-value ' + (item.isSkipped ? 'skipped-ans' : (item.isCorrect ? 'correct-ans' : 'wrong-ans')) + '">' +
+                    (item.userAnswer || 'Not Answered') + '</span></div>';
+                
+                if (!item.isCorrect) {
+                    detailsHTML += '<div class="answer-row">' +
+                        '<span class="answer-label">Correct Answer:</span>' +
+                        '<span class="answer-value correct-ans">' + item.correctAnswer + '</span></div>';
+                }
+                
+                detailsHTML += '<span class="status-badge ' + statusClass + '">' + statusIcon + ' ' + statusText + '</span></div>';
+            }
             document.getElementById('reportDetails').innerHTML = detailsHTML;
             
             const gameOverEl = document.getElementById('gameOver');
             gameOverEl.style.display = 'block';
-            setTimeout(() => gameOverEl.classList.add('show'), 10);
+            setTimeout(function() {
+                gameOverEl.classList.add('show');
+            }, 10);
         }
 
         function drawRoad() {
@@ -1202,10 +1203,11 @@
         }
 
         function drawBackgroundObjects() {
-            backgroundObjects.forEach(obj => {
+            for (let i = 0; i < backgroundObjects.length; i++) {
+                const obj = backgroundObjects[i];
                 const screenY = obj.y - gameState.cameraY + canvas.height / 2;
                 
-                if (screenY < -100 || screenY > canvas.height + 100) return;
+                if (screenY < -100 || screenY > canvas.height + 100) continue;
 
                 if (obj.type === 'tree') {
                     ctx.shadowBlur = 8;
@@ -1225,7 +1227,7 @@
                     ctx.fill();
                 }
                 ctx.shadowBlur = 0;
-            });
+            }
         }
 
         function drawPlayer() {
@@ -1274,10 +1276,11 @@
         }
 
         function drawAnswerBlocks() {
-            answerBlocks.forEach(block => {
+            for (let i = 0; i < answerBlocks.length; i++) {
+                const block = answerBlocks[i];
                 const screenY = block.y - gameState.cameraY + canvas.height / 2;
                 
-                if (screenY < -200 || screenY > canvas.height + 200) return;
+                if (screenY < -200 || screenY > canvas.height + 200) continue;
 
                 const distanceToPlayer = Math.abs(screenY - player.y);
                 if (distanceToPlayer < 200 && block.lane === player.lane && !block.passed) {
@@ -1312,7 +1315,7 @@
                 ctx.stroke();
                 
                 ctx.fillStyle = '#fff';
-                ctx.font = `bold ${Math.min(22, canvas.width / 30)}px Arial`;
+                ctx.font = 'bold ' + Math.min(22, canvas.width / 30) + 'px Arial';
                 ctx.textAlign = 'center';
                 ctx.shadowBlur = 3;
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
@@ -1322,7 +1325,7 @@
                 ctx.restore();
 
                 checkAnswer();
-            });
+            }
         }
 
         function roundRect(ctx, x, y, width, height, radius) {
@@ -1363,7 +1366,7 @@
             requestAnimationFrame(gameLoop);
         }
 
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', function(e) {
             if (!gameState.gameRunning) return;
             
             if (e.key === 'ArrowLeft' && player.targetLane > 0) {
@@ -1373,11 +1376,11 @@
             }
         });
 
-        canvas.addEventListener('touchstart', (e) => {
+        canvas.addEventListener('touchstart', function(e) {
             touchStartX = e.touches[0].clientX;
         });
 
-        canvas.addEventListener('touchend', (e) => {
+        canvas.addEventListener('touchend', function(e) {
             if (!gameState.gameRunning) return;
             
             const touchEndX = e.changedTouches[0].clientX;
@@ -1390,7 +1393,7 @@
             }
         });
 
-        canvas.addEventListener('click', (e) => {
+        canvas.addEventListener('click', function(e) {
             if (!gameState.gameRunning) return;
             
             const laneWidth = canvas.width / 3;
@@ -1398,64 +1401,37 @@
             player.targetLane = Math.max(0, Math.min(2, clickedLane));
         });
 
-        document.getElementById('restartBtn').addEventListener('click', () => {
+        document.getElementById('restartBtn').addEventListener('click', function() {
             sounds.background.currentTime = 0;
-            sounds.background.play().catch(e => {});
+            sounds.background.play().catch(function(e) {});
             initGame();
         });
 
-        document.getElementById('shareBtn').addEventListener('click', () => {
+        document.getElementById('shareBtn').addEventListener('click', function() {
             const totalQuestions = answerHistory.length;
-            const correctAnswers = answerHistory.filter(a => a.isCorrect).length;
+            const correctAnswers = answerHistory.filter(function(a) { return a.isCorrect; }).length;
             const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
             
-            const shareText = `🎓 I just completed NEET Biology Game!\n\n📊 My Results:\n✓ Correct: ${correctAnswers}/${totalQuestions}\n📈 Score: ${percentage}%\n🏆 Points: ${gameState.score}/${questions.length * 10}\n\nCan you beat my score? 🎮`;
+            const shareText = '🎓 I just completed NEET Biology Game!\n\n📊 My Results:\n✓ Correct: ' + correctAnswers + '/' + totalQuestions + '\n📈 Score: ' + percentage + '%\n🏆 Points: ' + gameState.score + '/' + (questions.length * 10) + '\n\nCan you beat my score? 🎮';
             
             if (navigator.share) {
                 navigator.share({
                     title: 'My NEET Biology Game Results',
                     text: shareText
-                }).catch(e => {});
+                }).catch(function(e) {});
             } else {
-                // Fallback: Copy to clipboard
-                navigator.clipboard.writeText(shareText).then(() => {
+                navigator.clipboard.writeText(shareText).then(function() {
                     alert('📋 Results copied to clipboard! Share it with your friends!');
-                }).catch(() => {
+                }).catch(function() {
                     alert(shareText);
                 });
             }
         });
 
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('orientationchange', () => {
+        window.addEventListener('orientationchange', function() {
             setTimeout(resizeCanvas, 100);
         });
-
-        }); // End of DOMContentLoaded
     </script>
 </body>
-</html>random() * 100 + '%';
-                confetti.style.top = '-50px';
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                
-                feedbackContainer.appendChild(confetti);
-            }
-
-            setTimeout(() => {
-                feedbackContainer.style.display = 'none';
-                feedbackContainer.innerHTML = '';
-            }, 4000);
-        }
-
-        function createSadConfetti() {
-            const sadEmojis = ['😢', '😭', '😞', '😔', '💔', '😿', '💨'];
-            const feedbackContainer = document.getElementById('feedback');
-            feedbackContainer.style.display = 'block';
-            feedbackContainer.innerHTML = '';
-
-            for (let i = 0; i < 40; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
-                confetti.style.left = Math.
+</html>
