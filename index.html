@@ -795,6 +795,7 @@
     </div>
 
     <script>
+        // Audio setup
         const sounds = {
             correct: new Audio('correct.mp3'),
             wrong: new Audio('wrong.mp3'),
@@ -804,6 +805,7 @@
         sounds.background.loop = true;
         sounds.background.volume = 0.3;
 
+        // Questions array
         const questions = [
             {
                 question: "What is the capital of France?",
@@ -829,49 +831,10 @@
                 question: "What is the largest ocean on Earth?",
                 options: ["Atlantic", "Indian", "Pacific"],
                 correct: 2
-            },
-const questions = [
-    {
-        question: "What is the capital of France?",
-        options: ["London", "Paris", "Berlin"],
-        correct: 1
-    },
-    {
-        question: "What is 5 + 7?",
-        options: ["10", "12", "15"],
-        correct: 1
-    },
-    // ADD YOUR NEW QUESTIONS BELOW:
-    ,{
-        question: "What is the powerhouse of the cell?",
-        options: ["Nucleus", "Mitochondria", "Ribosome"],
-        correct: 1  // Mitochondria is in the MIDDLE
-    }
-    ,{
-        question: "Which blood group is the universal donor?",
-        options: ["O negative", "A positive", "AB positive"],
-        correct: 0  // O negative is on the LEFT
-    }
-    ,{
-        question: "What is the largest organ in human body?",
-        options: ["Heart", "Liver", "Skin"],
-        correct: 2  // Skin is on the RIGHT
-    }
-    ,{
-        question: "DNA stands for?",
-        options: ["Deoxyribonucleic Acid", "Dinitrogen Acid", "Deoxyribonitric Acid"],
-        correct: 0
-    }
-    ,{
-        question: "How many chambers does the human heart have?",
-        options: ["2", "4", "6"],
-        correct: 1
-    }
-];
+            }
+        ];
 
-        
-
-        const canvas = document.getElementById('gameCanvas');
+        // Canvas and game setup
         const ctx = canvas.getContext('2d');
         
         let gameState = {
@@ -929,7 +892,7 @@ const questions = [
                 cameraY: 0,
                 hasAnswered: false
             };
-            answerHistory = [];
+            answerHistory = []; // Reset answer history for new game
             player.lane = 1;
             player.targetLane = 1;
             player.y = Math.min(400, canvas.height - 150);
@@ -1467,6 +1430,32 @@ const questions = [
         window.addEventListener('orientationchange', () => {
             setTimeout(resizeCanvas, 100);
         });
+
+        }); // End of DOMContentLoaded
     </script>
 </body>
-</html>
+</html>random() * 100 + '%';
+                confetti.style.top = '-50px';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                
+                feedbackContainer.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                feedbackContainer.style.display = 'none';
+                feedbackContainer.innerHTML = '';
+            }, 4000);
+        }
+
+        function createSadConfetti() {
+            const sadEmojis = ['😢', '😭', '😞', '😔', '💔', '😿', '💨'];
+            const feedbackContainer = document.getElementById('feedback');
+            feedbackContainer.style.display = 'block';
+            feedbackContainer.innerHTML = '';
+
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                confetti.style.left = Math.
