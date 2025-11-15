@@ -1371,13 +1371,16 @@
             
             if (e.key === 'ArrowLeft' && player.targetLane > 0) {
                 player.targetLane--;
+                e.preventDefault();
             } else if (e.key === 'ArrowRight' && player.targetLane < 2) {
                 player.targetLane++;
+                e.preventDefault();
             }
         });
 
         canvas.addEventListener('touchstart', function(e) {
             touchStartX = e.touches[0].clientX;
+            e.preventDefault();
         });
 
         canvas.addEventListener('touchend', function(e) {
@@ -1391,14 +1394,29 @@
             } else if (diff < -50 && player.targetLane > 0) {
                 player.targetLane--;
             }
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('mousedown', function(e) {
+            if (!gameState.gameRunning) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const laneWidth = canvas.width / 3;
+            const clickedLane = Math.floor(clickX / laneWidth);
+            player.targetLane = Math.max(0, Math.min(2, clickedLane));
+            e.preventDefault();
         });
 
         canvas.addEventListener('click', function(e) {
             if (!gameState.gameRunning) return;
             
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
             const laneWidth = canvas.width / 3;
-            const clickedLane = Math.floor(e.clientX / laneWidth);
+            const clickedLane = Math.floor(clickX / laneWidth);
             player.targetLane = Math.max(0, Math.min(2, clickedLane));
+            e.preventDefault();
         });
 
         document.getElementById('restartBtn').addEventListener('click', function() {
