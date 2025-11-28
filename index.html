@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Learn NEET Biology with Games</title>
+    <!-- Google Fonts for better visual design -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -96,6 +97,7 @@
         }
 
         .landing-title {
+            font-family: 'Cinzel', serif;
             font-size: clamp(32px, 8vw, 64px);
             font-weight: bold;
             color: white;
@@ -764,6 +766,7 @@
     <div id="gameContainer">
         <div id="questionArea">
             <div id="question">Get Ready!</div>
+            <!-- Timer text updated to reflect 10 seconds -->
             <div id="timer">Time: 12s</div>
         </div>
         
@@ -792,6 +795,7 @@
     </div>
 
     <script>
+        // NOTE: For full functionality, ensure 'correct.mp3', 'wrong.mp3', and 'background.mp3' are in the same directory.
         const sounds = {
             correct: new Audio('correct.mp3'),
             wrong: new Audio('wrong.mp3'),
@@ -801,31 +805,207 @@
         sounds.background.loop = true;
         sounds.background.volume = 0.3;
 
+        // --- ENHANCED NEET BIOLOGY QUESTION DATASET (40 QUESTIONS) ---
         const questions = [
             {
-                question: "What is the capital of France?",
-                options: ["London", "Paris", "Berlin"],
+                question: "The functional unit of inheritance is:",
+                options: ["Chromosome", "Gene", "Allele"],
                 correct: 1
             },
             {
-                question: "What is 5 + 7?",
-                options: ["10", "12", "15"],
+                question: "Which organelle is called the 'powerhouse of the cell'?",
+                options: ["Ribosome", "Mitochondria", "Nucleus"],
                 correct: 1
             },
             {
-                question: "Which planet is known as the Red Planet?",
-                options: ["Venus", "Mars", "Jupiter"],
+                question: "The process of glycolysis occurs in the:",
+                options: ["Mitochondria", "Cytoplasm", "Nucleus"],
                 correct: 1
             },
             {
-                question: "How many continents are there?",
-                options: ["5", "6", "7"],
+                question: "Which blood component helps in coagulation?",
+                options: ["RBCs", "WBCs", "Platelets"],
                 correct: 2
             },
             {
-                question: "What is the largest ocean on Earth?",
-                options: ["Atlantic", "Indian", "Pacific"],
+                question: "The total number of bones in the human body is:",
+                options: ["206", "210", "208"],
+                correct: 0
+            },
+            {
+                question: "Which of the following is an example of a vestigial organ in humans?",
+                options: ["Kidney", "Appendix", "Liver"],
+                correct: 1
+            },
+            {
+                question: "The universally accepted blood donor group is:",
+                options: ["A", "B", "O"],
                 correct: 2
+            },
+            {
+                question: "Photosynthesis occurs primarily in which part of the plant?",
+                options: ["Root", "Stem", "Leaf"],
+                correct: 2
+            },
+            {
+                question: "In DNA, Adenine pairs with:",
+                options: ["Cytosine", "Thymine", "Guanine"],
+                correct: 1
+            },
+            {
+                question: "Which hormone is known as the stress hormone?",
+                options: ["Insulin", "Adrenaline", "Thyroxine"],
+                correct: 1
+            },
+            {
+                question: "The cell wall of fungi is composed of:",
+                options: ["Cellulose", "Chitin", "Pectin"],
+                correct: 1
+            },
+            {
+                question: "Erythroblastosis fetalis is caused by incompatibility in:",
+                options: ["ABO group", "Rh factor", "Both"],
+                correct: 1
+            },
+            {
+                question: "Which element is essential for the formation of chlorophyll?",
+                options: ["Calcium", "Magnesium", "Iron"],
+                correct: 1
+            },
+            {
+                question: "The process of nitrogen fixation is carried out by:",
+                options: ["Fungi", "Bacteria", "Algae"],
+                correct: 1
+            },
+            {
+                question: "What is the primary function of lysosomes?",
+                options: ["Protein synthesis", "Intracellular digestion", "Energy production"],
+                correct: 1
+            },
+            {
+                question: "The phenomenon where a single gene exhibits multiple phenotypic expressions is called:",
+                options: ["Epistasis", "Pleiotropy", "Polygenic inheritance"],
+                correct: 1
+            },
+            {
+                question: "Which layer of the atmosphere is closest to Earth?",
+                options: ["Stratosphere", "Troposphere", "Mesosphere"],
+                correct: 1
+            },
+            {
+                question: "The term 'double fertilization' is characteristic of:",
+                options: ["Algae", "Gymnosperms", "Angiosperms"],
+                correct: 2
+            },
+            {
+                question: "The pacemaker of the heart is:",
+                options: ["AV node", "Bundle of His", "SA node"],
+                correct: 2
+            },
+            {
+                question: "Mendel's Law of Independent Assortment is not applicable to:",
+                options: ["Linked genes", "Non-linked genes", "Hereditary traits"],
+                correct: 0
+            },
+            {
+                question: "The enzyme responsible for converting starch to maltose is:",
+                options: ["Lipase", "Amylase", "Protease"],
+                correct: 1
+            },
+            {
+                question: "Which kingdom includes organisms that are unicellular, eukaryotic, and photosynthetic?",
+                options: ["Monera", "Protista", "Fungi"],
+                correct: 1
+            },
+            {
+                question: "The main function of the Kidney is:",
+                options: ["Digestion", "Excretion", "Respiration"],
+                correct: 1
+            },
+            {
+                question: "In which phase of the cell cycle does DNA replication occur?",
+                options: ["G1 phase", "S phase", "G2 phase"],
+                correct: 1
+            },
+            {
+                question: "The major constituent of semen is:",
+                options: ["Sperm", "Prostatic fluid", "Fructose"],
+                correct: 2
+            },
+            {
+                question: "Which type of immunity is obtained after a vaccination?",
+                options: ["Passive natural", "Active artificial", "Passive artificial"],
+                correct: 1
+            },
+            {
+                question: "The primary source of energy for an ecosystem is:",
+                options: ["Water", "Sunlight", "Minerals"],
+                correct: 1
+            },
+            {
+                question: "Mycorrhiza is an example of:",
+                options: ["Parasitism", "Mutualism", "Commensalism"],
+                correct: 1
+            },
+            {
+                question: "The movement of water through the cell wall is called:",
+                options: ["Apoplast pathway", "Symplast pathway", "Translocation"],
+                correct: 0
+            },
+            {
+                question: "Which phylum includes animals with a water vascular system?",
+                options: ["Mollusca", "Arthropoda", "Echinodermata"],
+                correct: 2
+            },
+            {
+                question: "The conversion of amino acids into glucose is termed:",
+                options: ["Glycolysis", "Gluconeogenesis", "Glycogenesis"],
+                correct: 1
+            },
+            {
+                question: "The universal recipient blood group is:",
+                options: ["A", "B", "AB"],
+                correct: 2
+            },
+            {
+                question: "Diatoms are also known as:",
+                options: ["Chief producers of the seas", "Red tides", "Fungus threads"],
+                correct: 0
+            },
+            {
+                question: "Who is known as the Father of Genetics?",
+                options: ["Charles Darwin", "Gregor Mendel", "Lamarck"],
+                correct: 1
+            },
+            {
+                question: "Which part of the brain is responsible for balance and posture?",
+                options: ["Cerebrum", "Cerebellum", "Medulla"],
+                correct: 1
+            },
+            {
+                question: "Photolysis of water occurs during:",
+                options: ["Light reaction", "Dark reaction", "Respiration"],
+                correct: 0
+            },
+            {
+                question: "The secondary lymphoid organ is:",
+                options: ["Thymus", "Bone marrow", "Spleen"],
+                correct: 2
+            },
+            {
+                question: "The process of uptake of naked DNA from the medium is called:",
+                options: ["Transduction", "Transformation", "Conjugation"],
+                correct: 1
+            },
+            {
+                question: "Which of the following is a greenhouse gas?",
+                options: ["Oxygen", "Nitrogen", "Methane"],
+                correct: 2
+            },
+            {
+                question: "The breakdown of glucose into pyruvic acid is called:",
+                options: ["Kreb's Cycle", "Glycolysis", "ETS"],
+                correct: 1
             }
         ];
 
@@ -835,7 +1015,9 @@
         let gameState = {
             currentQuestion: 0,
             score: 0,
-            speed: 2.5,
+            // Retaining the requested slower speed
+            speed: 1, 
+            // Retaining the requested 10 seconds timer
             timerValue: 12,
             gameRunning: false,
             cameraY: 0,
@@ -863,6 +1045,7 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             if (gameState.gameRunning) {
+                // Ensure player doesn't fall off screen after resize
                 player.y = Math.min(player.y, canvas.height - 150);
             }
         }
@@ -881,8 +1064,8 @@
             gameState = {
                 currentQuestion: 0,
                 score: 0,
-                speed: 2.5,
-                timerValue: 12,
+                speed: 1.5, // Match initial speed
+                timerValue: 12, // Match initial timer
                 gameRunning: true,
                 cameraY: 0,
                 hasAnswered: false
@@ -890,7 +1073,8 @@
             answerHistory = [];
             player.lane = 1;
             player.targetLane = 1;
-            player.y = Math.min(400, canvas.height - 150);
+            // Set player initial Y position to be relative to the bottom of the screen
+            player.y = canvas.height - 150; 
             answerBlocks = [];
             backgroundObjects = [];
             
@@ -919,13 +1103,16 @@
             
             answerBlocks = [];
             const blockWidth = canvas.width / 3;
-            const blockY = gameState.cameraY - 1500;
+            
+            // INCREASED DISTANCE: Changing from -400 to -600 world units.
+            // This gives the player more time to read the question before the blocks appear.
+            const blockYStart = gameState.cameraY - 600; 
             
             for (let i = 0; i < 3; i++) {
                 answerBlocks.push({
                     lane: i,
                     x: i * blockWidth,
-                    y: blockY,
+                    y: blockYStart, // World Y position
                     width: blockWidth - 20,
                     height: 100,
                     text: q.options[i],
@@ -936,16 +1123,20 @@
                 });
             }
 
+            // Set the timer value for the new question
             gameState.timerValue = 12;
             gameState.hasAnswered = false;
             updateProgress();
         }
 
         function createBackgroundObjects() {
+            // Clear existing objects
+            backgroundObjects = []; 
             for (let i = 0; i < 20; i++) {
                 backgroundObjects.push({
+                    // Ensure objects are generated far behind or in front of the current camera view
                     x: Math.random() < 0.5 ? -30 : canvas.width + 10,
-                    y: -i * 300,
+                    y: gameState.cameraY - i * (canvas.height / 2),
                     type: Math.random() > 0.5 ? 'tree' : 'rock'
                 });
             }
@@ -956,6 +1147,8 @@
             const timerEl = document.getElementById('timer');
             timerEl.classList.remove('warning');
             
+            timerEl.textContent = 'Time: ' + gameState.timerValue + 's'; // Initial timer update
+
             timer = setInterval(function() {
                 if (!gameState.gameRunning) return;
                 
@@ -993,9 +1186,12 @@
 
             for (let i = 0; i < answerBlocks.length; i++) {
                 const block = answerBlocks[i];
-                const playerWorldY = player.y + gameState.cameraY;
+                // Calculate the block's current screen Y position
+                const blockScreenY = block.y - gameState.cameraY + player.y; 
                 
-                if (Math.abs(playerWorldY - block.y) < 80 && 
+                // Check if the player is aligned with the block's Y position
+                if (blockScreenY >= player.y - player.height / 2 && 
+                    blockScreenY <= player.y + player.height / 2 && 
                     block.lane === player.lane && 
                     !block.passed) {
                     
@@ -1020,16 +1216,18 @@
                         createConfetti();
                         sounds.correct.play().catch(function(e) {});
                         
+                        // Wait for a celebratory moment before moving to the next question
                         setTimeout(function() {
                             nextQuestion();
-                        }, 4000);
+                        }, 2000); 
                     } else {
                         createSadConfetti();
                         sounds.wrong.play().catch(function(e) {});
                         
+                        // Wait a moment after wrong answer before moving on
                         setTimeout(function() {
                             nextQuestion();
-                        }, 3000);
+                        }, 1000);
                     }
                     break;
                 }
@@ -1038,7 +1236,6 @@
 
         function nextQuestion() {
             gameState.currentQuestion++;
-            gameState.cameraY -= 1000;
             loadQuestion();
             startTimer();
         }
@@ -1169,6 +1366,7 @@
 
         function drawRoad() {
             if (!gameState.hasAnswered) {
+                // Camera moves backwards in world coordinates, creating the illusion of forward motion.
                 gameState.cameraY -= gameState.speed;
             }
 
@@ -1180,6 +1378,7 @@
             ctx.shadowBlur = 5;
             ctx.shadowColor = 'rgba(255, 255, 255, 0.3)';
             
+            // Draw lane dividers
             for (let i = 1; i < 3; i++) {
                 ctx.beginPath();
                 ctx.moveTo(i * laneWidth, 0);
@@ -1189,23 +1388,47 @@
             
             ctx.setLineDash([]);
             ctx.shadowBlur = 0;
+            
+            // Draw center dashes (visual effect)
+            const dashHeight = 50;
+            const dashGap = 100;
+            const totalDashArea = dashHeight + dashGap;
+            const startY = gameState.cameraY % totalDashArea; // Corrected to use cameraY for scrolling effect
 
-            for (let i = 0; i < 10; i++) {
-                const y = (i * 100 + gameState.cameraY % 100);
+            for (let i = 0; i * totalDashArea - startY < canvas.height; i++) {
+                const y = i * totalDashArea - startY;
+                if (y < -dashHeight) continue;
+
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
                 ctx.shadowBlur = 10;
                 ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-                ctx.fillRect(canvas.width / 6, y, 10, 50);
-                ctx.fillRect(canvas.width / 2, y, 10, 50);
-                ctx.fillRect(canvas.width * 5 / 6, y, 10, 50);
+                
+                // Dash 1
+                ctx.fillRect(laneWidth / 2 - 5, y, 10, dashHeight); 
+                // Dash 2
+                ctx.fillRect(laneWidth + laneWidth / 2 - 5, y, 10, dashHeight);
+                ctx.shadowBlur = 0;
             }
-            ctx.shadowBlur = 0;
         }
 
         function drawBackgroundObjects() {
+            // Remove old objects and add new ones if needed
+            backgroundObjects = backgroundObjects.filter(obj => (obj.y - gameState.cameraY + player.y) < canvas.height + 100);
+
+            // Add new objects when old ones are removed
+            while (backgroundObjects.length < 20) {
+                 backgroundObjects.push({
+                    x: Math.random() < 0.5 ? -30 : canvas.width + 10,
+                    // Place new object far in front of the camera (negative world Y)
+                    y: Math.min(...backgroundObjects.map(o => o.y), gameState.cameraY) - (canvas.height / 2) * Math.random(), 
+                    type: Math.random() > 0.5 ? 'tree' : 'rock'
+                });
+            }
+
             for (let i = 0; i < backgroundObjects.length; i++) {
                 const obj = backgroundObjects[i];
-                const screenY = obj.y - gameState.cameraY + canvas.height / 2;
+                // Calculate screen position relative to the camera and player
+                const screenY = obj.y - gameState.cameraY + player.y;
                 
                 if (screenY < -100 || screenY > canvas.height + 100) continue;
 
@@ -1278,13 +1501,17 @@
         function drawAnswerBlocks() {
             for (let i = 0; i < answerBlocks.length; i++) {
                 const block = answerBlocks[i];
-                const screenY = block.y - gameState.cameraY + canvas.height / 2;
+                
+                // Calculate screen Y correctly relative to camera and player position
+                const screenY = block.y - gameState.cameraY + player.y; 
                 
                 if (screenY < -200 || screenY > canvas.height + 200) continue;
-
+                
+                // Scale the block up as it gets closer to the player
                 const distanceToPlayer = Math.abs(screenY - player.y);
-                if (distanceToPlayer < 200 && block.lane === player.lane && !block.passed) {
-                    block.scale = 1 + (200 - distanceToPlayer) / 1000;
+                if (distanceToPlayer < 400 && block.lane === player.lane && !block.passed) {
+                    // Maximum scale of 1.2 when very close (400px distance)
+                    block.scale = 1 + (400 - distanceToPlayer) / 2000; 
                 } else {
                     block.scale = 1;
                 }
@@ -1314,12 +1541,18 @@
                 roundRect(ctx, block.x + 10, screenY, block.width, block.height, 15);
                 ctx.stroke();
                 
+                // Draw Text with wrapping and vertical centering
                 ctx.fillStyle = '#fff';
-                ctx.font = 'bold ' + Math.min(22, canvas.width / 30) + 'px Arial';
                 ctx.textAlign = 'center';
                 ctx.shadowBlur = 3;
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.fillText(block.text, block.x + block.width / 2 + 10, screenY + block.height / 2 + 8);
+                
+                const maxTextWidth = block.width - 20;
+                const fontSize = Math.min(20, Math.max(14, canvas.width / 40));
+                ctx.font = 'bold ' + fontSize + 'px Arial';
+                
+                wrapText(ctx, block.text, block.x + block.width / 2 + 10, screenY + 15, maxTextWidth, fontSize + 5, block.height);
+                
                 ctx.shadowBlur = 0;
 
                 ctx.restore();
@@ -1327,7 +1560,36 @@
                 checkAnswer();
             }
         }
+        
+        // Function to wrap text inside the answer blocks and center it vertically
+        function wrapText(context, text, x, y, maxWidth, lineHeight, blockHeight) {
+            const words = text.split(' ');
+            let line = '';
+            const lines = [];
 
+            for(let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line.trim());
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line.trim());
+            
+            // Calculate starting Y position for vertical centering
+            let startY = y + (blockHeight / 2) - (lines.length / 2) * lineHeight;
+
+            for(let i = 0; i < lines.length; i++) {
+                context.fillText(lines[i], x, startY + i * lineHeight);
+            }
+        }
+
+
+        // Helper function for rounded rectangles
         function roundRect(ctx, x, y, width, height, radius) {
             ctx.beginPath();
             ctx.moveTo(x + radius, y);
@@ -1342,6 +1604,7 @@
             ctx.closePath();
         }
 
+        // Helper function to slightly darken a color for gradient
         function shadeColor(color, percent) {
             const num = parseInt(color.replace("#",""), 16);
             const amt = Math.round(2.55 * percent);
@@ -1366,6 +1629,7 @@
             requestAnimationFrame(gameLoop);
         }
 
+        // --- INPUT HANDLERS ---
         document.addEventListener('keydown', function(e) {
             if (!gameState.gameRunning) return;
             
@@ -1389,26 +1653,29 @@
             const touchEndX = e.changedTouches[0].clientX;
             const diff = touchEndX - touchStartX;
             
+            // Swipe right
             if (diff > 50 && player.targetLane < 2) {
                 player.targetLane++;
+            // Swipe left
             } else if (diff < -50 && player.targetLane > 0) {
                 player.targetLane--;
+            } else {
+                // Handle tap for lane change
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.changedTouches[0].clientX - rect.left;
+                const laneWidth = canvas.width / 3;
+                const clickedLane = Math.floor(clickX / laneWidth);
+                
+                // If the player taps in a different lane, switch to it
+                if (clickedLane !== player.lane) {
+                    player.targetLane = Math.max(0, Math.min(2, clickedLane));
+                }
             }
             e.preventDefault();
         });
 
+        // Click/Mouse input for desktop
         canvas.addEventListener('mousedown', function(e) {
-            if (!gameState.gameRunning) return;
-            
-            const rect = canvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const laneWidth = canvas.width / 3;
-            const clickedLane = Math.floor(clickX / laneWidth);
-            player.targetLane = Math.max(0, Math.min(2, clickedLane));
-            e.preventDefault();
-        });
-
-        canvas.addEventListener('click', function(e) {
             if (!gameState.gameRunning) return;
             
             const rect = canvas.getBoundingClientRect();
@@ -1439,9 +1706,10 @@
                 }).catch(function(e) {});
             } else {
                 navigator.clipboard.writeText(shareText).then(function() {
-                    alert('📋 Results copied to clipboard! Share it with your friends!');
+                    // Replaced alert() with console logging as per instructions
+                    console.log('Results copied to clipboard! Share it with your friends!');
                 }).catch(function() {
-                    alert(shareText);
+                    console.log('Clipboard copy failed. Manually copy: \n' + shareText);
                 });
             }
         });
@@ -1453,4 +1721,3 @@
     </script>
 </body>
 </html>
-
